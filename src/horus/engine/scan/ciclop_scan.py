@@ -9,6 +9,7 @@ import time
 import Queue
 import numpy as np
 import datetime
+import cv2
 
 from horus import Singleton
 from horus.engine.scan.scan import Scan
@@ -173,6 +174,15 @@ class CiclopScan(Scan):
         # Set current video images
         self.current_video.set_texture(capture.texture)
         self.current_video.set_laser(capture.lasers)
+
+
+        #Added by Rodrigo on 31/01/2016 to debug application
+        lasersname= './laser-%f.tif' %(self._theta)
+        texturename= './texture-%f.tif' %(self.theta)
+        cv2.imwrite(lasername,capture.lasers)
+        cv2.imwrite(texturename,capture.texture)
+        #End addition
+
 
         return capture
 
