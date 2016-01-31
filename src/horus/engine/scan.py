@@ -539,6 +539,16 @@ class TextureScan(Scan):
 								if imgRaw is None or imgLaserLeft is None or imgLaserRight is None:
 									self.driver.camera._fail()
 								else:
+									#Begin modification
+									rightlasername= './rightlaser-%f.tif' %(self._theta)
+									leftlasername= './leftlaser-%f.tif' %(self._theta)
+
+									texturename= './texture-%f.tif' %(self.theta)
+									cv2.imwrite(rightlasername,imgLaserRight)
+									cv2.imwrite(leftlasername,imgLaserLeft)
+									cv2.imwrite(texturename,imgRaw)
+									#End modification
+									
 									imgRaw = cv2.transpose(imgRaw)
 									imgRaw = cv2.flip(imgRaw, 1)
 									imgRaw = cv2.cvtColor(imgRaw, cv2.COLOR_BGR2RGB)
@@ -550,6 +560,7 @@ class TextureScan(Scan):
 									imgLaserRight = cv2.transpose(imgLaserRight)
 									imgLaserRight = cv2.flip(imgLaserRight, 1)
 									imgLaserRight = cv2.cvtColor(imgLaserRight, cv2.COLOR_BGR2RGB)
+									
 
 					else: #-- SLOW METHOD
 
@@ -575,6 +586,14 @@ class TextureScan(Scan):
 							imgLaserRight = self.driver.camera.captureImage(flush=True, flushValue=flush)
 						else:
 							imgLaserRight = None
+						#Begin modification
+						rightlasername= './rightlaser-%f.tif' %(self._theta)
+						leftlasername= './leftlaser-%f.tif' %(self._theta)
+						texturename= './texture-%f.tif' %(self.theta)
+						cv2.imwrite(rightlasername,imgLaserRight)
+						cv2.imwrite(leftlasername,imgLaserLeft)
+						cv2.imwrite(texturename,imgRaw)
+						#End modification
 
 					print "> {0} deg <".format(self.theta * 180.0 / np.pi)
 					self.theta -= self.pcg.degrees * self.pcg.rad
